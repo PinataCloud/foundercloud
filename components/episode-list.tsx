@@ -2,7 +2,8 @@ import { supabase } from "@/lib/db";
 import { CreateEpisodeForm } from "./create-episode-form";
 import { Button } from "./ui/button";
 import Link from "next/link";
-export const revalidate = 60;
+
+export const revalidate = 1;
 
 export type Episode = {
 	id: number;
@@ -36,7 +37,7 @@ export async function EpisodeList({
 			{data.map((item: Episode) => (
 				<div key={item.id} className="flex flex-col gap-2">
 					<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-						{item.id}: {item.name}
+						{item.name}
 					</h4>
 					<p>{item.description}</p>
 					<audio controls src={item.audio_url}>
@@ -46,7 +47,7 @@ export async function EpisodeList({
 			))}
 			<CreateEpisodeForm id={id} groupId={groupId} />
 			<div className="flex justify-center">
-				<Button>
+				<Button asChild>
 					<Link href="/"> Go Back </Link>
 				</Button>
 			</div>

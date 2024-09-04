@@ -16,14 +16,19 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { pinata } from "@/lib/pinata";
 
 const formSchema = z.object({
 	name: z.string().min(2),
 	description: z.string().min(2),
-	file: z.instanceof(FileList).optional(),
+	file: z.any(),
 });
 
 export function CreateEpisodeForm({
@@ -67,6 +72,7 @@ export function CreateEpisodeForm({
 			const createEpisode = await createEpisodeRequest.json();
 			console.log(createEpisode);
 			setIsLoading(false);
+			router.refresh();
 		} else {
 			console.log("no file selected");
 			setIsLoading(false);
@@ -88,6 +94,7 @@ export function CreateEpisodeForm({
 			</DialogTrigger>
 
 			<DialogContent>
+				<DialogTitle>Add an Episode</DialogTitle>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 						<FormField

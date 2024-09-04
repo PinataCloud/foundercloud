@@ -9,12 +9,15 @@ export async function POST(request: NextRequest) {
 		const description = formData.get("description");
 		const podcastId = formData.get("podcastId");
 		const audioUrl = formData.get("audio");
-		const { data, error } = await supabase.from("episodes").insert({
-			name: name,
-			description: description,
-			audio_url: audioUrl,
-			podcast: podcastId,
-		});
+		const { data, error } = await supabase
+			.from("episodes")
+			.insert({
+				name: name,
+				description: description,
+				audio_url: audioUrl,
+				podcast: podcastId,
+			})
+			.select();
 		console.log(data);
 
 		return NextResponse.json(data, { status: 200 });

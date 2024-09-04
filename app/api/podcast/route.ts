@@ -15,12 +15,15 @@ export async function POST(request: NextRequest) {
 		});
 		const { cid } = await pinata.upload.file(file).group(group.id);
 		const imageUrl = `https://${process.env.NEXT_PUBLIC_GATEWAY_URL}/files/${cid}`;
-		const { data, error } = await supabase.from("podcasts").insert({
-			name: name,
-			group_id: group.id,
-			description: description,
-			image_url: imageUrl,
-		});
+		const { data, error } = await supabase
+			.from("podcasts")
+			.insert({
+				name: name,
+				group_id: group.id,
+				description: description,
+				image_url: imageUrl,
+			})
+			.select();
 		console.log(data);
 
 		return NextResponse.json(data, { status: 200 });

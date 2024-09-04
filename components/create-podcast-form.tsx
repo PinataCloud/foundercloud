@@ -16,13 +16,18 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogTrigger,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
 const formSchema = z.object({
 	name: z.string().min(2),
 	description: z.string().min(2),
-	file: typeof window === "undefined" ? z.any() : z.instanceof(FileList),
+	file: z.any(),
 });
 
 export function CreatePodcastForm() {
@@ -54,7 +59,7 @@ export function CreatePodcastForm() {
 			const createPodcast = await createPodcastRequest.json();
 			console.log(createPodcast);
 			setIsLoading(false);
-			router.push("/");
+			router.push(`/podcast/${createPodcast[0].id}`);
 		} else {
 			console.log("no file selected");
 			setIsLoading(false);
@@ -76,6 +81,7 @@ export function CreatePodcastForm() {
 			</DialogTrigger>
 
 			<DialogContent>
+				<DialogTitle>Create a Podcast</DialogTitle>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 						<FormField
