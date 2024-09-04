@@ -22,7 +22,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 const formSchema = z.object({
 	name: z.string().min(2),
 	description: z.string().min(2),
-	file: z.instanceof(FileList).optional(),
+	file: typeof window === "undefined" ? z.any() : z.instanceof(FileList),
 });
 
 export function CreatePodcastForm() {
