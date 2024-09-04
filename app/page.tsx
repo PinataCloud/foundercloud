@@ -39,7 +39,7 @@ export default async function Home() {
 				</h4>
 			</div>
 			{data.map((item: Podcast) => (
-				<Card className="overflow-hidden" key={item.id}>
+				<Card className="overflow-hidden max-w-[400px]" key={item.id}>
 					<Link href={`/podcast/${item.id}`}>
 						<img
 							src={item.image_url}
