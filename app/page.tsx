@@ -1,7 +1,8 @@
 import { CreatePodcastForm } from "@/components/create-podcast-form";
-import { supabase } from "@/lib/db";
+import { createClient } from "@/lib/supabase/server";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import { SignInButton } from "@/components/sign-in-button";
 
 export const revalidate = 60;
 
@@ -16,6 +17,7 @@ export type Podcast = {
 
 async function fetchData(): Promise<Podcast[]> {
 	try {
+		const supabase = createClient();
 		const { data, error } = await supabase.from("podcasts").select("*");
 		return data as Podcast[];
 	} catch (error) {
@@ -26,6 +28,9 @@ async function fetchData(): Promise<Podcast[]> {
 
 export default async function Home() {
 	const data = await fetchData();
+	const supabase = createClient();
+	const { data: userData, error } = await supabase.auth.getUser();
+
 	console.log(data);
 
 	return (
@@ -55,7 +60,7 @@ export default async function Home() {
 					</Link>
 				</Card>
 			))}
-			<CreatePodcastForm />
+			{error || !userData.user ? <SignInButton /> : <CreatePodcastForm />}
 		</main>
 	);
 }
