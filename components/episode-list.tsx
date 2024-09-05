@@ -51,7 +51,7 @@ export async function EpisodeList({
 			<CreateEpisodeForm
 				id={id}
 				groupId={groupId}
-				isOwner={!!(userData && userData?.user?.id === id)}
+				isOwner={userData && userData?.user?.id === id}
 			/>
 			<div className="flex justify-center">
 				<Button asChild>
