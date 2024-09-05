@@ -8,6 +8,7 @@ export type Podcast = {
 	group_id: string;
 	description: string;
 	image_url: string;
+	user_id: string;
 };
 
 async function fetchData(id: string): Promise<Podcast[]> {
@@ -43,7 +44,11 @@ export default async function Page({ params }: { params: { id: string } }) {
 						<p>{show.description}</p>
 					</div>
 				</div>
-				<EpisodeList id={params.id} groupId={show.group_id} />
+				<EpisodeList
+					id={params.id}
+					groupId={show.group_id}
+					userId={show.user_id}
+				/>
 			</div>
 		</main>
 	);

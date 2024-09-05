@@ -30,7 +30,8 @@ async function fetchData(id: string): Promise<Episode[]> {
 export async function EpisodeList({
 	id,
 	groupId,
-}: { id: string; groupId: string }) {
+	userId,
+}: { id: string; groupId: string; userId: string }) {
 	const supabase = createClient();
 	const { data: userData, error } = await supabase.auth.getUser();
 	const data = await fetchData(id);
@@ -51,7 +52,7 @@ export async function EpisodeList({
 			<CreateEpisodeForm
 				id={id}
 				groupId={groupId}
-				isOwner={userData && userData?.user?.id === id}
+				isOwner={userData && userData?.user?.id === userId}
 			/>
 			<div className="flex justify-center">
 				<Button asChild>
