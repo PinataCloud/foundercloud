@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
 		const formData = await request.formData();
 		const name = formData.get("name");
 		const description = formData.get("description");
-		const userId = formData.get("userId");
+		const userId = user?.id;
 		const file: File | null = formData.get("image") as unknown as File;
 		const group = await pinata.groups.create({
 			name: name as string,
