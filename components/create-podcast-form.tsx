@@ -51,12 +51,12 @@ export function CreatePodcastForm() {
 		setIsLoading(true);
 		const file: File | null = values.file ? values.file[0] : null;
 		const { data: userData, error } = await supabase.auth.getUser();
-		if (file) {
+		if (file && userData) {
 			const data = new FormData();
 			data.append("name", values.name);
 			data.append("description", values.description);
 			data.append("image", file);
-			data.append("userId", userData.user.id);
+			data.append("userId", userData.user.id!);
 			const createPodcastRequest = await fetch("/api/podcast", {
 				method: "POST",
 				body: data,
