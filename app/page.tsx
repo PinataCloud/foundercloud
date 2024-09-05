@@ -40,7 +40,7 @@ export default async function Home() {
 					FounderCloud
 				</h1>
 				<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-					Yap like you have nothing else to do
+					Yap like your SaaS depended on it
 				</h4>
 			</div>
 			{data.map((item: Podcast) => (
