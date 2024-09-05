@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 	console.log(data);
 	const show = data[0];
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-start p-24 gap-12">
+		<main className="flex min-h-screen flex-col items-center justify-start p-24 gap-12 max-w-[500px] mx-auto">
 			<div className="flex flex-col items-start gap-12">
 				<div className="overflow-hidden" key={show.id}>
 					<img
