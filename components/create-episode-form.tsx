@@ -35,7 +35,8 @@ const formSchema = z.object({
 export function CreateEpisodeForm({
 	groupId,
 	id,
-}: { groupId: string; id: string }) {
+	isOwner,
+}: { groupId: string; id: string; isOwner: boolean }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const supabase = createClient();
@@ -94,6 +95,9 @@ export function CreateEpisodeForm({
 				Please wait
 			</Button>
 		);
+	}
+	if (!isOwner) {
+		return null;
 	}
 	return (
 		<Dialog>

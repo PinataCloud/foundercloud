@@ -2,6 +2,7 @@ import { supabase } from "@/lib/db";
 import { CreateEpisodeForm } from "./create-episode-form";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
 export const revalidate = 1;
 
@@ -30,6 +31,8 @@ export async function EpisodeList({
 	id,
 	groupId,
 }: { id: string; groupId: string }) {
+	const supabase = createClient();
+	const { data: userData, error } = await supabase.auth.getUser();
 	const data = await fetchData(id);
 	console.log(data);
 	return (
@@ -45,7 +48,11 @@ export async function EpisodeList({
 					</audio>
 				</div>
 			))}
-			<CreateEpisodeForm id={id} groupId={groupId} />
+			<CreateEpisodeForm
+				id={id}
+				groupId={groupId}
+				isOwner={!!(userData && userData?.user?.id === id)}
+			/>
 			<div className="flex justify-center">
 				<Button asChild>
 					<Link href="/"> Go Back </Link>
