@@ -60,7 +60,6 @@ export function CreatePodcastForm() {
 			data.append("name", values.name);
 			data.append("description", values.description);
 			data.append("image", file);
-			data.append("userId", userData.user.id);
 			const createPodcastRequest = await fetch("/api/podcast", {
 				method: "POST",
 				headers: {
