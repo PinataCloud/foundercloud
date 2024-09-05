@@ -55,7 +55,7 @@ export function CreatePodcastForm() {
 			data: { session },
 		} = await supabase.auth.getSession();
 
-		if (file && userData && userData.user && session) {
+		if (file && session) {
 			const data = new FormData();
 			data.append("name", values.name);
 			data.append("description", values.description);

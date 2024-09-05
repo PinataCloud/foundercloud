@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { pinata } from "@/lib/pinata";
+import { createClient } from "@/lib/supabase/client";
 
 const formSchema = z.object({
 	name: z.string().min(2),
@@ -37,6 +38,7 @@ export function CreateEpisodeForm({
 }: { groupId: string; id: string }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
+	const supabase = createClient();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -50,7 +52,10 @@ export function CreateEpisodeForm({
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setIsLoading(true);
 		const file: File | null = values.file ? values.file[0] : null;
-		if (file) {
+		const {
+			data: { session },
+		} = await supabase.auth.getSession();
+		if (file && session) {
 			const keyRequest = await fetch("/api/key");
 			const keys = await keyRequest.json();
 			const uploadFile = await pinata.upload
@@ -67,6 +72,9 @@ export function CreateEpisodeForm({
 			data.append("podcastId", id);
 			const createEpisodeRequest = await fetch("/api/episode", {
 				method: "POST",
+				headers: {
+					Authorization: `Bearer ${session.access_token}`,
+				},
 				body: data,
 			});
 			const createEpisode = await createEpisodeRequest.json();

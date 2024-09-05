@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 				<div className="overflow-hidden" key={show.id}>
 					<img
 						src={show.image_url}
-						className="h-[400px] w-[400px]"
+						className="max-h-[400px] max-w-[400px] object-cover"
 						alt={show.id.toString()}
 					/>
 					<div className="p-2 flex flex-col gap-2">
