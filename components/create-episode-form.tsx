@@ -57,7 +57,12 @@ export function CreateEpisodeForm({
 			data: { session },
 		} = await supabase.auth.getSession();
 		if (file && session) {
-			const keyRequest = await fetch("/api/key");
+			const keyRequest = await fetch("/api/key", {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${session.access_token}`,
+				},
+			});
 			const keys = await keyRequest.json();
 			const uploadFile = await pinata.upload
 				.file(file)
