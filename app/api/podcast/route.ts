@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
 		const formData = await request.formData();
 		const name = formData.get("name");
 		const description = formData.get("description");
+		const userId = formData.get("userId");
 		const file: File | null = formData.get("image") as unknown as File;
 		const group = await pinata.groups.create({
 			name: name as string,
@@ -22,6 +23,7 @@ export async function POST(request: NextRequest) {
 				group_id: group.id,
 				description: description,
 				image_url: imageUrl,
+				user_id: userId,
 			})
 			.select();
 		console.log(data);
