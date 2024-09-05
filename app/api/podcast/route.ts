@@ -1,10 +1,23 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { pinata } from "@/lib/pinata";
-import { supabase } from "@/lib/db";
+import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
+	const supabase = createClient();
 	try {
+		const token = request.headers.get("authorization")?.split("Bearer ")[1];
+		const {
+			data: { user },
+			error: authError,
+		} = await supabase.auth.getUser(token);
+		if (authError) {
+			console.log(authError);
+			return NextResponse.json(
+				{ error: "Internal Server Error" },
+				{ status: 500 },
+			);
+		}
 		const formData = await request.formData();
 		const name = formData.get("name");
 		const description = formData.get("description");

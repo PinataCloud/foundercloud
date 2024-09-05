@@ -51,7 +51,11 @@ export function CreatePodcastForm() {
 		setIsLoading(true);
 		const file: File | null = values.file ? values.file[0] : null;
 		const { data: userData, error } = await supabase.auth.getUser();
-		if (file && userData && userData.user) {
+		const {
+			data: { session },
+		} = await supabase.auth.getSession();
+
+		if (file && userData && userData.user && session) {
 			const data = new FormData();
 			data.append("name", values.name);
 			data.append("description", values.description);
@@ -59,6 +63,9 @@ export function CreatePodcastForm() {
 			data.append("userId", userData.user.id);
 			const createPodcastRequest = await fetch("/api/podcast", {
 				method: "POST",
+				headers: {
+					Authorization: `Bearer ${session.access_token}`,
+				},
 				body: data,
 			});
 			const createPodcast = await createPodcastRequest.json();
