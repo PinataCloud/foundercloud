@@ -37,7 +37,7 @@ export async function EpisodeList({
 	const data = await fetchData(id);
 	console.log(data);
 	return (
-		<div className="flex flex-col gap-12">
+		<div className="flex flex-col gap-12 w-full">
 			{data.map((item: Episode) => (
 				<div key={item.id} className="flex flex-col gap-2">
 					<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
@@ -49,15 +49,15 @@ export async function EpisodeList({
 					</audio>
 				</div>
 			))}
-			<CreateEpisodeForm
-				id={id}
-				groupId={groupId}
-				isOwner={userData && userData?.user?.id === userId}
-			/>
-			<div className="flex justify-center">
+			<div className="flex justify-center gap-4">
 				<Button asChild>
 					<Link href="/"> Go Back </Link>
 				</Button>
+				<CreateEpisodeForm
+					id={id}
+					groupId={groupId}
+					isOwner={userData && userData?.user?.id === userId}
+				/>
 			</div>
 		</div>
 	);
