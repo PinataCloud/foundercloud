@@ -44,8 +44,13 @@ export async function EpisodeList({
 						{item.name}
 					</h4>
 					<p>{item.description}</p>
-					<audio controls src={item.audio_url}>
+					<audio controls src={item.audio_url} preload="metadata" playsInline>
+						<source src={item.audio_url} type="audio/mpeg" />
+						<source src={item.audio_url} type="audio/aac" />
+						<source src={item.audio_url} type="audio/ogg" />
+						<source src={item.audio_url} type="video/mp4" />
 						<track kind="captions" src="" label="English" />
+						Your browser does not support the audio element.
 					</audio>
 				</div>
 			))}

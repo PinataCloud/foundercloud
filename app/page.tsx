@@ -48,7 +48,7 @@ export default async function Home() {
 					<Link href={`/podcast/${item.id}`}>
 						<img
 							src={item.image_url}
-							className="max-h-[400px] max-w-[400px] object-cover"
+							className="sm:max-h-[400px] sm:max-w-[400px] max-h-[300px] max-w-[300px] object-cover"
 							alt={item.id.toString()}
 						/>
 						<div className="p-2 flex flex-col gap-2">

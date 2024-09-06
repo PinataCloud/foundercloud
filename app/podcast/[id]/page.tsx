@@ -29,15 +29,15 @@ export default async function Page({ params }: { params: { id: string } }) {
 	console.log(data);
 	const show = data[0];
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-start p-24 gap-12 max-w-[500px] mx-auto">
+		<main className="flex min-h-screen flex-col items-center justify-start p-24 gap-12 sm:max-w-[500px] max-w-[350px] mx-auto">
 			<div className="flex flex-col items-start gap-12">
 				<div className="overflow-hidden" key={show.id}>
 					<img
 						src={show.image_url}
-						className="max-h-[400px] max-w-[400px] object-cover"
+						className="sm:max-h-[400px] sm:max-w-[400px] max-w-[350px] max-h-[350px] object-cover"
 						alt={show.id.toString()}
 					/>
-					<div className="p-2 flex flex-col gap-2">
+					<div className="flex flex-col gap-2">
 						<h3 className="croll-m-20 text-2xl font-semibold tracking-tight">
 							{show.name}
 						</h3>
